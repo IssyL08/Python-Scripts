@@ -14,6 +14,7 @@ candidate_votes = {}
 # Winning Candidate and Winning Count Tracker
 winning_candidate = ""
 winning_count = 0
+vote_percentage=0
 
 # Read the csv and convert it into a list of dictionaries
 with open(file_to_load) as election_data:
@@ -47,7 +48,7 @@ with open(file_to_load) as election_data:
             winning_count = votes
             winning_candidate = candidate
         voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})\n"
-        print(voter_output, end="")
+        print(voter_output)
 
 #Print results           
 print()
@@ -55,6 +56,16 @@ print("Election Results")
 print("--------------------------------")
 print(f"Total Votes: {total_votes}")
 print("--------------------------------")
+
+for candidate in candidate_votes:
+        votes = candidate_votes.get(candidate)
+        vote_percentage = float(votes) / float(total_votes) * 100
+        if (votes > winning_count):
+            winning_count = votes
+            winning_candidate = candidate
+        voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})\n"
+        print(voter_output)
+
 
 print("--------------------------------")   
 print(f"Winner:  {winning_candidate}")
