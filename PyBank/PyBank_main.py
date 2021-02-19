@@ -3,7 +3,7 @@ import csv
 
 #list for data
 date=[]
-profit_losses=[]
+profit=[]
 
 #file paths
 budget_data = os.path.join('Resources', 'budget_data.csv')
@@ -14,17 +14,16 @@ with open(budget_data, newline='', encoding='utf-8') as csvfile:
 
   #row is python list from csv file 
   #counting months
-    monthrow=0
+    month_row=0
     for row in csvreader:
         date.append(row[0])
-        profit_losses.append(row[1])
-        monthrow += 1
+        profit.append(row[1])
+        month_row += 1
 
-        #print(monthrow)
 #greatest increase and decrease calculations
 
-Greatest_Increase = profit [0]
-Greatest_Decrease = profit [0]
+greatest_increase = profit [0]
+greatest_decrease = profit [0]
 
 total_profit=0
 
@@ -32,15 +31,35 @@ for p in profit:
     total_profit +=int(p)
 
 for i in range (len(profit)):
-    if revenue [i] >=Greatest_Increase:
-        Greatest_Increase=profit[i]
-        Greatest_Inc_Month=date[i]
+    if profit[i] >=greatest_increase:
+        greatest_increase=profit[i]
+        greatest_inc_month=date[i]
 
-        elif profit[i] <= Greatest_Decrease:
-            Greatest_Decrease = profit [i]
-            Greatest_Dec_Month= date[i]
+    elif profit[i] <= greatest_decrease:
+        greatest_decrease = profit[i]
+        greatest_dec_month= date[i]
 
-average_change=roung(total_profit/monthrow, 2)
+average_change=round(total_profit/month_row, 2)
+
+print("Financial Analysis")
+print("--------------------------------")
+print("Total Months:" + str(month_row))
+print("Total Revenue:" + str(total_profit))
+print("Average Revenue Change:" + str(average_change))
+print("Greatest Increase in Profit:" + str(greatest_inc_month) + "($ " + str(greatest_increase) + ")")
+print("Greatest Decrease in Profit:" + str(greatest_dec_month) + "($ " + str(greatest_decrease) + ")")
+
+output_path = os.path.join("Analysis", "Financial_Analysis_IL.csv")
+with open(output_path, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    csvwriter.writerows([
+            ["Total Revenue: $" + str(total_profit)],
+            ["Total Months:" + str(month_row)],
+            ["Average Revenue Change:" + str(average_change)],
+            ["Greatest Increase in Profit:" + str(greatest_inc_month) + "($ " + str(greatest_increase) + ")"],
+            ["Greatest Increase in Profit:" + str(greatest_dec_month) + "($ " + str(greatest_decrease) + ")"] ])
+
+
 
 
         
