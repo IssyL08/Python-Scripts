@@ -19,6 +19,8 @@ with open(budget_data, newline='', encoding='utf-8') as csvfile:
         date.append(row[0])
         profit.append(row[1])
         month_row += 1
+print("Total Months:" + str(month_row))
+
 
 #greatest increase and decrease calculations
 
@@ -39,15 +41,18 @@ for i in range (len(profit)):
         greatest_decrease = profit[i]
         greatest_dec_month= date[i]
 
+#average change calculation
 average_change=round(total_profit/month_row, 2)
 
+#print data to python terminal
 print("Financial Analysis")
-print("--------------------------------")
 print("Total Months:" + str(month_row))
 print("Total Revenue:" + str(total_profit))
 print("Average Revenue Change:" + str(average_change))
 print("Greatest Increase in Profit:" + str(greatest_inc_month) + "($ " + str(greatest_increase) + ")")
 print("Greatest Decrease in Profit:" + str(greatest_dec_month) + "($ " + str(greatest_decrease) + ")")
+
+#output data to csv file
 
 output_path = os.path.join("Analysis", "Financial_Analysis_IL.csv")
 with open(output_path, 'w', newline='') as csvfile:
