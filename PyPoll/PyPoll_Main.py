@@ -7,6 +7,9 @@ file_to_load = os.path.join("Resources", "election_data.csv")
 # Total Vote Counter
 total_votes = 0
 votes=[]
+
+voter_output=[]
+
 # Candidate Options and Vote Counters
 candidate_options = []
 candidate_votes = {}
@@ -72,7 +75,18 @@ with open(output_path, 'w', newline='') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
     csvwriter.writerows([
             ["Total Votes:" + str(total_votes)],
-            [(voter_output, sep= "")],
+            [(voter_output)],
             ["Winner:" + str(winning_candidate)]])
+  
+
+
+
+
+  
+
+
+  
+
+
   
 
