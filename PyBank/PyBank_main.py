@@ -1,71 +1,76 @@
 import os
 import csv
 
-#list for data
-date=[]
-profit=[]
-
 #file paths
 budget_data = os.path.join('Resources', 'budget_data.csv')
 
+#create import lists for the CSV data
+month_list = []
+profit_loss_list = []
+
+# import the csv file
 with open(budget_data, newline='', encoding='utf-8') as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=',')
-    next(csvreader)
+    csvreader = csv.reader(csvfile, delimiter=",")
+    csvheader=next(csvfile)
+    
 
-  #row is python list from csv file 
-  #counting months
-    month_row=0
     for row in csvreader:
-        date.append(row[0])
-        profit.append(row[1])
-        month_row += 1
-print("Total Months:" + str(month_row))
+        month_list.append(str(row[0]))
+        profit_loss_list.append(int(row[1]))
 
+# the total number of months included in the dataset.
+total_months = len(month_list)
 
-#greatest increase and decrease calculations
+# the net profit/loss
+net_profit_loss = 0
 
-greatest_increase = profit [0]
-greatest_decrease = profit [0]
+for x in profit_loss_list:
+    net_profit_loss = net_profit_loss + x
 
-total_profit=0
+# the average profit/loss
+average_monthly_change_list = []
+previous_month_amount = 0
 
-for p in profit:
-    total_profit +=int(p)
+for x in range(len(profit_loss_list)):
+    if x == 0:
+        previous_month_amount = profit_loss_list[x]
+    else:
+        monthly_change = profit_loss_list[x] - previous_month_amount
+        average_monthly_change_list.append(monthly_change)
+        previous_month_amount = profit_loss_list[x]
 
-for i in range (len(profit)):
-    if profit[i] >=greatest_increase:
-        greatest_increase=profit[i]
-        greatest_inc_month=date[i]
+#print(average_monthly_change_list)
 
-    elif profit[i] <= greatest_decrease:
-        greatest_decrease = profit[i]
-        greatest_dec_month= date[i]
+length = len(average_monthly_change_list)
+total = sum(average_monthly_change_list)
+profit_loss_average = total / length
+print(profit_loss_average)
 
-#average change calculation
-average_change=round(total_profit/month_row, 2)
+# the minimum and maximum profit vs. loss per month
+month_greatest_increase = ''
+amount_greatest_increase = 0
+month_greatest_decrease = ''
+amount_greatest_decrease = 0
 
-#print data to python terminal
-print("Financial Analysis")
-print("Total Months:" + str(month_row))
-print("Total Revenue:" + str(total_profit))
-print("Average Revenue Change:" + str(average_change))
-print("Greatest Increase in Profit:" + str(greatest_inc_month) + "($ " + str(greatest_increase) + ")")
-print("Greatest Decrease in Profit:" + str(greatest_dec_month) + "($ " + str(greatest_decrease) + ")")
+for x in range(len(average_monthly_change_list)):
+    if average_monthly_change_list[x] > amount_greatest_increase:
+        amount_greatest_increase = average_monthly_change_list[x]
+        month_greatest_increase = month_list[x+1]
+    elif average_monthly_change_list[x] < amount_greatest_decrease:
+        amount_greatest_decrease = average_monthly_change_list[x]
+        month_greatest_decrease = month_list[x+1]
 
-#output data to csv file
+# The total number of months included in the dataset
+print(f'Total Months: {total_months}')
 
-output_path = os.path.join("Analysis", "Financial_Analysis_IL.csv")
-with open(output_path, 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile, delimiter=',')
-    csvwriter.writerows([
-            ["Total Revenue: $" + str(total_profit)],
-            ["Total Months:" + str(month_row)],
-            ["Average Revenue Change:" + str(average_change)],
-            ["Greatest Increase in Profit:" + str(greatest_inc_month) + "($ " + str(greatest_increase) + ")"],
-            ["Greatest Increase in Profit:" + str(greatest_dec_month) + "($ " + str(greatest_decrease) + ")"] ])
+# The net total amount of "Profit/Losses" over the entire period
+print(f'Total: ${net_profit_loss}')
 
+# The average of the changes in "Profit/Losses" over the entire period
+print(f'Average Change: {round(profit_loss_average)}')
 
+# The greatest increase in profits (date and amount) over the entire period
+print(f'Greatest Increase in Profits: {month_greatest_increase} ${amount_greatest_increase}.')
 
-
-        
-
+# The greatest decrease in losses (date and amount) over the entire period
+print(f' Greatest Decrease in Profits: {month_greatest_decrease} ${amount_greatest_decrease}.')
