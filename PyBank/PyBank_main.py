@@ -74,3 +74,15 @@ print(f'Greatest Increase in Profits: {month_greatest_increase} (${amount_greate
 
 # The greatest decrease in losses (date and amount) over the entire period
 print(f' Greatest Decrease in Profits: {month_greatest_decrease} (${amount_greatest_decrease})')
+
+#output data to csv file
+
+output_path = os.path.join("Analysis", "Financial_Analysis_IL.csv")
+with open(output_path, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    csvwriter.writerows([
+            ["Total Revenue: $" + str(total_months)],
+            ["Total Months: $" + str(net_profit_loss)],
+            ["Average Revenue Change:" + str(round(profit_loss_average,2))],
+            ["Greatest Increase in Profit:" + str(month_greatest_increase) + "($ " + str(amount_greatest_increase) + ")"],
+            ["Greatest Increase in Profit:" + str(month_greatest_decrease) + "($ " + str(amount_greatest_decrease) + ")"] ])
