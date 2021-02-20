@@ -67,10 +67,10 @@ print(f'Total Months: {total_months}')
 print(f'Total: ${net_profit_loss}')
 
 # The average of the changes in "Profit/Losses" over the entire period
-print(f'Average Change: {round(profit_loss_average)}')
+print(f'Average Change: ${round(profit_loss_average,2)}')
 
 # The greatest increase in profits (date and amount) over the entire period
-print(f'Greatest Increase in Profits: {month_greatest_increase} ${amount_greatest_increase}.')
+print(f'Greatest Increase in Profits: {month_greatest_increase} (${amount_greatest_increase})')
 
 # The greatest decrease in losses (date and amount) over the entire period
-print(f' Greatest Decrease in Profits: {month_greatest_decrease} ${amount_greatest_decrease}.')
+print(f' Greatest Decrease in Profits: {month_greatest_decrease} (${amount_greatest_decrease})')
