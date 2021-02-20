@@ -18,14 +18,14 @@ with open(budget_data, newline='', encoding='utf-8') as csvfile:
         month_list.append(str(row[0]))
         profit_loss_list.append(int(row[1]))
 
-# the total number of months included in the dataset.
+# total months
 total_months = len(month_list)
 
-# the net profit/loss
-net_profit_loss = 0
+# total profit
+total_profit_loss = 0
 
 for x in profit_loss_list:
-    net_profit_loss = net_profit_loss + x
+    total_profit_loss = total_profit_loss + x
 
 # the average profit/loss
 average_monthly_change_list = []
@@ -64,7 +64,7 @@ for x in range(len(average_monthly_change_list)):
 print(f'Total Months: {total_months}')
 
 # The net total amount of "Profit/Losses" over the entire period
-print(f'Total: ${net_profit_loss}')
+print(f'Total: ${total_profit_loss}')
 
 # The average of the changes in "Profit/Losses" over the entire period
 print(f'Average Change: ${round(profit_loss_average,2)}')
@@ -82,7 +82,7 @@ with open(output_path, 'w', newline='') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
     csvwriter.writerows([
             ["Total Revenue: $" + str(total_months)],
-            ["Total Months: $" + str(net_profit_loss)],
+            ["Total Months: $" + str(total_profit_loss)],
             ["Average Revenue Change:" + str(round(profit_loss_average,2))],
             ["Greatest Increase in Profit:" + str(month_greatest_increase) + "($ " + str(amount_greatest_increase) + ")"],
             ["Greatest Increase in Profit:" + str(month_greatest_decrease) + "($ " + str(amount_greatest_decrease) + ")"] ])
