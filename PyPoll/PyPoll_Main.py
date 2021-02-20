@@ -16,7 +16,7 @@ candidate_votes = {}
 winning_candidate = ""
 winning_count = 0
 
-# Read the csv:create dictionaries
+# Read the csv:create dict.
 with open(file_to_load) as election_data:
     reader = csv.reader(election_data)
 
@@ -44,10 +44,10 @@ with open(file_to_load) as election_data:
         # add vote total to new found candidates
         candidate_votes[candidate_name] = candidate_votes[candidate_name] + 1
 
-# Print the results and export the data to csv
+# print results
 with open(file_to_output, "w") as csv_file:
 
-    # Print the final vote count
+    # final vote count
     election_results = (
         f"Election Results\n"
         f"-------------------------\n"
@@ -55,34 +55,34 @@ with open(file_to_output, "w") as csv_file:
         f"-------------------------\n")
     print(election_results, end="")
 
-    # write election results to csv
+    # elections results to csv
     csv_file.write(election_results)
 
     # finding winner
     for candidate in candidate_votes:
 
-        # find vote count and percentages
+        # find vote count and percents
         votes = candidate_votes.get(candidate)
         vote_percentage = float(votes) / float(total_votes) * 100
 
-        # Determine winning vote count and candidate
+        # find winning vote number and winner
         if (votes > winning_count):
             winning_count = votes
             winning_candidate = candidate
 
-        # Print each candidate's voter count and percentage (to terminal)
+        # print candidate name with vote info
         voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})\n"
         print(voter_output, end="")
 
-        # write to csv file to save values counted
+        # voter output to csv
         csv_file.write(voter_output)
 
-    # Printing to terminal
+    # printing into terminal results
     winning_candidate_summary = (
         f"-------------------------\n"
         f"Winner: {winning_candidate}\n"
         f"-------------------------\n")
     print(winning_candidate_summary)
 
-    # printing last winning candidate to the csv file
+    # winning candidate print to csv
     csv_file.write(winning_candidate_summary)
