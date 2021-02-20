@@ -41,14 +41,7 @@ with open(file_to_load) as election_data:
         # Vote to candidate count
         candidate_votes[candidate_name] = candidate_votes[candidate_name] + 1
 
-    for candidate in candidate_votes:
-        votes = candidate_votes.get(candidate)
-        vote_percentage = float(votes) / float(total_votes) * 100
-        if (votes > winning_count):
-            winning_count = votes
-            winning_candidate = candidate
-        voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})\n"
-        print(voter_output)
+    
 
 #Print results           
 print()
@@ -63,7 +56,7 @@ for candidate in candidate_votes:
         if (votes > winning_count):
             winning_count = votes
             winning_candidate = candidate
-        voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})\n"
+        voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})"
         print(voter_output)
 
 
@@ -72,10 +65,14 @@ print(f"Winner:  {winning_candidate}")
 print("--------------------------------")
 
       
+#output data to csv file
 
+output_path = os.path.join("Analysis", "Election_Results_IL.csv")
+with open(output_path, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    csvwriter.writerows([
+            ["Total Votes:" + str(total_votes)],
+            [(voter_output, sep= "")],
+            ["Winner:" + str(winning_candidate)]])
   
-
-
-
-
 
