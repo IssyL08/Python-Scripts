@@ -86,18 +86,3 @@ with open(file_to_output, "w") as csv_file:
 
     # printing last winning candidate to the csv file
     csv_file.write(winning_candidate_summary)
-
-      
-
-
-
-
-
-  
-
-
-  
-
-
-  
-
