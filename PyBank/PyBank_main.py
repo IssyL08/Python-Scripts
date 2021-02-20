@@ -6,7 +6,7 @@ budget_data = os.path.join('Resources', 'budget_data.csv')
 
 #create import lists for the CSV data
 month_list = []
-profit_loss_list = []
+profit_list = []
 
 # import the csv file
 with open(budget_data, newline='', encoding='utf-8') as csvfile:
@@ -16,37 +16,37 @@ with open(budget_data, newline='', encoding='utf-8') as csvfile:
 
     for row in csvreader:
         month_list.append(str(row[0]))
-        profit_loss_list.append(int(row[1]))
+        profit_list.append(int(row[1]))
 
 # total months
 total_months = len(month_list)
 
 # total profit
-total_profit_loss = 0
+total_profit = 0
 
-for x in profit_loss_list:
-    total_profit_loss = total_profit_loss + x
+for x in profit_list:
+    total_profit = total_profit + x
 
 # the average profit/loss
 average_monthly_change_list = []
 previous_month_amount = 0
 
-for x in range(len(profit_loss_list)):
+for x in range(len(profit_list)):
     if x == 0:
-        previous_month_amount = profit_loss_list[x]
+        previous_month_amount = profit_list[x]
     else:
-        monthly_change = profit_loss_list[x] - previous_month_amount
+        monthly_change = profit_list[x] - previous_month_amount
         average_monthly_change_list.append(monthly_change)
-        previous_month_amount = profit_loss_list[x]
+        previous_month_amount = profit_list[x]
 
-#print(average_monthly_change_list)
+#monthly change
 
 length = len(average_monthly_change_list)
 total = sum(average_monthly_change_list)
 profit_loss_average = total / length
 print(profit_loss_average)
 
-# the minimum and maximum profit vs. loss per month
+# the minimum and maximum, increase/decrease per month
 month_greatest_increase = ''
 amount_greatest_increase = 0
 month_greatest_decrease = ''
@@ -60,19 +60,19 @@ for x in range(len(average_monthly_change_list)):
         amount_greatest_decrease = average_monthly_change_list[x]
         month_greatest_decrease = month_list[x+1]
 
-# The total number of months included in the dataset
+# Total months
 print(f'Total Months: {total_months}')
 
-# The net total amount of "Profit/Losses" over the entire period
-print(f'Total: ${total_profit_loss}')
+# Total of all profit
+print(f'Total: ${total_profit}')
 
-# The average of the changes in "Profit/Losses" over the entire period
+# Average Change calc
 print(f'Average Change: ${round(profit_loss_average,2)}')
 
-# The greatest increase in profits (date and amount) over the entire period
+# Greatest increase calc
 print(f'Greatest Increase in Profits: {month_greatest_increase} (${amount_greatest_increase})')
 
-# The greatest decrease in losses (date and amount) over the entire period
+# Greatest decrease calc
 print(f' Greatest Decrease in Profits: {month_greatest_decrease} (${amount_greatest_decrease})')
 
 #output data to csv file
@@ -82,7 +82,7 @@ with open(output_path, 'w', newline='') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
     csvwriter.writerows([
             ["Total Months: " + str(total_months)],
-            ["Total Revenue: $" + str(total_profit_loss)],
+            ["Total Revenue: $" + str(total_profit)],
             ["Average Revenue Change: $" + str(round(profit_loss_average,2))],
             ["Greatest Increase in Profit:" + str(month_greatest_increase) + "($ " + str(amount_greatest_increase) + ")"],
             ["Greatest Increase in Profit:" + str(month_greatest_decrease) + "($ " + str(amount_greatest_decrease) + ")"] ])
